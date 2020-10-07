@@ -63,7 +63,6 @@ int Grid::lengthX() const noexcept
 	return x_length_;
 }
 
-
 int Grid::lengthY() const noexcept
 {
 	return y_length_;
@@ -81,7 +80,6 @@ bool Grid::isValidCell(int x, int y, int z) const noexcept
 			z >= 0 && z < z_length_);
 }
 
-
 void Grid::setCellAt(int x, int y, int z, GridCell cell)
 {
 	if (!isValidCell(x, y, z))
@@ -90,7 +88,6 @@ void Grid::setCellAt(int x, int y, int z, GridCell cell)
 	}
 	grid_[(x * y_length_ * z_length_) + (y * z_length_) + z] = cell;
 }
-
 
 GridCell Grid::getCellAt(int x, int y, int z)
 {
