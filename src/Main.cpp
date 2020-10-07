@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Snake.hpp"
+#include "Grid.hpp"
 #include "GridPoint.hpp"
 
 
@@ -25,35 +26,27 @@ std::ostream& operator<<(std::ostream& os, const std::vector<GridPoint>& vector)
 	return os;
 }
 
+std::ostream& operator<<(std::ostream& os, const GridCell cell)
+{
+	switch (cell)
+	{
+	case GridCell::Empty:
+		os << "Empty";
+		break;
+	case GridCell::Food:
+		os << "Food";
+		break;
+	case GridCell::Snake:
+		os << "Snake";
+		break;
+	}
+	return os;
+}
+
 int main()
 {
 	std::cout << "Hello world!" << std::endl;
-
-	Snake snake{{0, 0, 0}, 0.8f};
-	std::cout << snake.getHead() << " " << snake.getTail() << std::endl;
-
-	snake.move(SnakeDirection::XPositive);
-	std::cout << snake.getHead() << " " << snake.getTail() << std::endl;
-
-	snake.append();
-	snake.append();
-
-	snake.move(SnakeDirection::XPositive);
-	std::cout << snake.getHead() << " " << snake.getTail() << std::endl;
-
-	snake.move(SnakeDirection::XPositive);
-	std::cout << snake.getHead() << " " << snake.getTail() << std::endl;
-
-	snake.move(SnakeDirection::YPositive);
-	std::cout << snake.getHead() << " " << snake.getTail() << std::endl;
-
-	std::cout << snake.getSegments() << std::endl;
-
-	Snake snake2 = snake;
-	std::cout << snake.getSegments() << " " << snake2.getSegments() << std::endl;
-
-	snake2.move(SnakeDirection::XPositive);
-	std::cout << snake.getSegments() << " " << snake2.getSegments() << std::endl;
-
 	std::cin.get();
+
+	return 0;
 }
