@@ -17,13 +17,16 @@ class Grid
 public:
 	// Creates a 3-dimensional grid with the following dimensions. Initially,
 	// all spaces in the grid are empty.
-	Grid(int xlen, int ylen, int zlen);
+	Grid(int x_length, int y_length, int z_length);
 
 	// Creates a copy of the grid from an existing one.
 	Grid(const Grid& grid);
 
 	// Safely deallocates the grid to prevent memory leaks.
 	~Grid() noexcept;
+
+	// clear() clears the grid so that all cells are empty.
+	void clear() noexcept;
 
 	// lengthX() returns the length of the grid along the x-axis.
 	int lengthX() const noexcept;
@@ -47,14 +50,14 @@ public:
 	GridCell getCellAt(int x, int y, int z);
 
 private:
-	int xLength;
-	int yLength;
-	int zLength;
-	GridCell* grid;
+	int x_length_;
+	int y_length_;
+	int z_length_;
+	GridCell* grid_;
 
 private:
 	// FillGrid() fills all spaces in the grid with the provided GridCell.
-	void fillGrid(GridCell cell);
+	void fillGrid(GridCell cell) noexcept;
 };
 
 
