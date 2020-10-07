@@ -6,14 +6,16 @@
 
 
 
-Snake::Snake(const GridPoint& start, float s)
-	: segments{std::queue<GridPoint>{}}, appends{0}, speed{s}
+Snake::Snake(const GridPoint& start, float speed)
+	: queue_{std::queue<GridPoint>{}}, num_appends_{0}, speed_{speed}
 {
-	segments.push(start);
+	queue_.push(start);
 }
 
 Snake::Snake(const Snake& snake)
-	: segments{snake.segments}, appends{snake.appends}, speed{snake.speed}
+	: queue_{snake.queue_},
+	  num_appends_{snake.num_appends_},
+	  speed_{snake.speed_}
 {
 }
 
@@ -21,7 +23,7 @@ Snake::Snake(const Snake& snake)
 
 void Snake::move(SnakeDirection direction)
 {
-	GridPoint pos = segments.back();
+	GridPoint pos = queue_.back();
 
 	switch (direction)
 	{
@@ -45,62 +47,62 @@ void Snake::move(SnakeDirection direction)
 		break;
 	}
 
-	segments.push(pos);
-	if (appends > 0)
+	queue_.push(pos);
+	if (num_appends_ > 0)
 	{
-		--appends;
+		--num_appends_;
 	}
 	else
 	{
-		segments.pop();
+		queue_.pop();
 	}
 }
 
 void Snake::append()
 {
-	++appends;
+	++num_appends_;
 }
 
 int Snake::appendsWaiting() const noexcept
 {
-	return appends;
+	return num_appends_;
 }
 
 int Snake::length() const noexcept
 {
-	return segments.size();
+	return queue_.size();
 }
 
 const GridPoint& Snake::getHead() const noexcept
 {
-	return segments.back();
+	return queue_.back();
 }
 
 const GridPoint& Snake::getTail() const noexcept
 {
-	return segments.front();
+	return queue_.front();
 }
 
-std::vector<GridPoint> Snake::getSegments() const
+std::vector<GridPoint> Snake::getPositionsOccupied() const
 {
-	std::vector<GridPoint> result(segments.size());
-	std::queue<GridPoint> copy(segments);
+	std::vector<GridPoint> result(queue_.size());
+	std::queue<GridPoint> copy(queue_);
 
-	for (std::size_t i = 0; i < segments.size(); ++i)
+	for (std::size_t i = 0; i < queue_.size(); ++i)
 	{
-		result.at(segments.size() - 1 - i) = copy.front();
+		result.at(queue_.size() - 1 - i) = copy.front();
 		copy.pop();
 	}
 
 	return result;
 }
 
-void Snake::setSpeed(float s)
+void Snake::setSpeed(float speed)
 {
-	speed = s;
+	speed_ = speed;
 }
 
 float Snake::getSpeed() const noexcept
 {
-	return speed;
+	return speed_;
 }

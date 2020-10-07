@@ -20,7 +20,7 @@ public:
 	// the snake defined as the number of positions traveled within a second.
 	// The speed must be a positive value, otherwised undefined behavior may
 	// occur.
-	Snake(const GridPoint& start, float s);
+	Snake(const GridPoint& start, float speed);
 
 	// Creates a copy of a snake from an existing one.
 	Snake(const Snake& snake);
@@ -37,10 +37,10 @@ public:
 	// append() will be fully realized in the snake after two calls to move().
 	void append();
 
-	// appendsWaiting() returns the number of positions appended that are in
-	// waiting to be reflected in the snake. If there are three appends in the
-	// waitlist, and move() is called once, then 2 will be returned since there
-	// are now only two appends waiting to be reflected in the snake.
+	// appendsWaiting() returns the number of positions to be appended that are
+	// in waiting to be reflected in the snake. If there are three appends in
+	// the waitlist, and move() is called once, then 2 will be returned since
+	// there are now only two appends waiting to be reflected in the snake.
 	int appendsWaiting() const noexcept;
 
 	// length() returns the number of positions that the snake is made up of.
@@ -54,23 +54,23 @@ public:
 	// the snake is the last position of the chain positions.
 	const GridPoint& getTail() const noexcept;
 
-	// getSegment() returns positions that the snake occupies and stores them
-	// in a std::vector. The head of the snake would be the first element and
-	// the tail would be the last element in the std::vector.
-	std::vector<GridPoint> getSegments() const;
+	// getPositionsOccupied() returns positions that the snake occupies and
+	// stores them in a std::vector. The head of the snake would be the first
+	// element and the tail would be the last element in the std::vector.
+	std::vector<GridPoint> getPositionsOccupied() const;
 
 	// setSpeed() sets the speed of the snake to the one provided. Speed is
 	// defined as the number of positions traveled within a second. The speed
 	// must be a positive value, otherwise undefined behavior may occur.
-	void setSpeed(float s);
+	void setSpeed(float speed);
 
 	// getSpeed() returns the current speed of the snake.
 	float getSpeed() const noexcept;
 
 private:
-	std::queue<GridPoint> segments;
-	int appends;
-	float speed;
+	std::queue<GridPoint> queue_;
+	int num_appends_;
+	float speed_;
 };
 
 
