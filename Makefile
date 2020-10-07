@@ -1,7 +1,7 @@
 # Global variables
 
-flags = -std=c++17 -Wall -pedantic-errors -Werror
 comp = g++
+flags = -std=c++17 -Wall -pedantic-errors -Werror
 
 src = src/
 bin = bin/
@@ -9,23 +9,33 @@ dep = dep/
 
 output = Main.exe
 
+obs = $(bin)Snake.o $(bin)Grid.o $(bin)Main.o
+
+# Virtual paths
+
+vpath %.cpp $(src)
+vpath %.hpp $(src)
+
 # Global labels
 
-all: $(bin)Snake.o $(bin)Grid.o $(bin)Main.o 
-	rm -f $(output)
-	$(comp) $(flags) $(bin)Snake.o $(bin)Grid.o $(bin)Main.o -o $(output)
+all : $(output)
 
-clean:
-	rm -f $(bin)*.o
-	rm -f $(output)
+clean :
+	rm -f $(obs) $(output)
 
 # Helper labels
 
-$(bin)Snake.o: $(src)Snake.hpp $(src)Snake.cpp $(src)SnakeDirection.hpp $(src)GridPoint.hpp
-	$(comp) $(flags) $(src)Snake.cpp -c -o $(bin)Snake.o
+$(output) : $(obs)
+	rm -f $@
+	$(comp) $(flags) $^ -o $@
 
-$(bin)Grid.o: $(src)Grid.hpp $(src)Grid.cpp $(src)GridCell.hpp $(src)GridException.hpp
-	$(comp) $(flags) $(src)Grid.cpp -c -o $(bin)Grid.o
+# Pattern rule for general compilation
 
-$(bin)Main.o: $(src)Main.cpp $(src)Snake.hpp $(src)GridPoint.hpp
-	$(comp) $(flags) $(src)Main.cpp -c -o $(bin)Main.o
+$(bin)%.o : $(src)%.cpp
+	$(comp) $(flags) $< -c -o $@
+	@echo built $@ from $<
+
+# Dependency rules
+$(bin)Snake.o : $(src)Snake.hpp $(src)SnakeDirection.hpp $(src)GridPoint.hpp
+$(bin)Grid.o : $(src)Grid.hpp $(src)GridCell.hpp $(src)GridException.hpp
+$(bin)Main.o : $(src)Snake.hpp $(src)GridPoint.hpp
