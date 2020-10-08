@@ -1,4 +1,4 @@
-# Global variables
+# Generic global variables
 
 comp = g++
 flags = -std=c++17 -Wall -pedantic-errors -Werror
@@ -10,6 +10,11 @@ dep = dep/
 output = Main.exe
 
 obs = $(bin)Snake.o $(bin)Grid.o $(bin)Main.o
+
+# Variables to third party libraries
+
+SDL2_h = $(dep)SDL2/include
+SDL2_link = -L$(dep)SDL2/lib -lmingw32 -lSDL2main -lSDL2
 
 # Virtual paths
 
@@ -27,15 +32,17 @@ clean :
 
 $(output) : $(obs)
 	rm -f $@
-	$(comp) $(flags) $^ -o $@
+	$(comp) $(flags) $(SDL2_link) $^ -o $@
+	
 
 # Pattern rule for general compilation
 
-$(bin)%.o : $(src)%.cpp
-	$(comp) $(flags) $< -c -o $@
-	@echo built $@ from $<
+$(bin)%.o : %.cpp
+	$(comp) $(flags) -I$(SDL2_h) $< -c -o $@
+	@echo "    [ SUCCESS ] $< --> $@"
 
 # Dependency rules
-$(bin)Snake.o : $(src)Snake.hpp $(src)SnakeDirection.hpp $(src)GridPoint.hpp
-$(bin)Grid.o : $(src)Grid.hpp $(src)GridCell.hpp $(src)GridException.hpp
-$(bin)Main.o : $(src)Snake.hpp $(src)GridPoint.hpp
+
+$(bin)Snake.o : Snake.hpp SnakeDirection.hpp GridPoint.hpp
+$(bin)Grid.o : Grid.hpp GridCell.hpp GridException.hpp
+$(bin)Main.o : Snake.hpp GridPoint.hpp

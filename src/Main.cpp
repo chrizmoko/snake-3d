@@ -2,6 +2,7 @@
 #include "Snake.hpp"
 #include "Grid.hpp"
 #include "GridPoint.hpp"
+#include <SDL2/SDL.h>
 
 
 
@@ -43,7 +44,7 @@ std::ostream& operator<<(std::ostream& os, const GridCell cell)
 	return os;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	std::cout << "Hello world!" << std::endl;
 	std::cin.get();
