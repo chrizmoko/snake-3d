@@ -3,6 +3,10 @@
 // Implementation of Snake.hpp.
 
 #include "Snake.hpp"
+#include "SnakeDirection.hpp"
+#include "GridPoint.hpp"
+#include <queue>
+#include <vector>
 
 
 
@@ -18,8 +22,6 @@ Snake::Snake(const Snake& snake)
 	  speed_{snake.speed_}
 {
 }
-
-#include <iostream>
 
 void Snake::move(SnakeDirection direction)
 {
