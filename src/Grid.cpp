@@ -3,8 +3,8 @@
 // Implementation of Grid.hpp.
 
 #include "Grid.hpp"
+#include "GridCell.hpp"
 #include "GridException.hpp"
-#include <iostream>
 
 
 
