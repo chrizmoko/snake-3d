@@ -9,12 +9,17 @@ dep = dep/
 
 output = Main.exe
 
-obs = $(bin)Snake.o $(bin)Grid.o $(bin)Main.o
+objects = $(bin)Snake.o $(bin)Grid.o $(bin)Main.o
+objects2 = $(bin)WindowTester.o
 
-# Variables to third party libraries
+# Include directory
 
-SDL2_h = $(dep)SDL2/include
-SDL2_link = -L$(dep)SDL2/lib -lmingw32 -lSDL2main -lSDL2
+idirs = -IC:\DevLibraries\LibSDL2\include\SDL2
+
+# Link directory and files
+
+ldirs = -LC:\DevLibraries\LibSDL2\lib
+libs = -lmingw32 -lSDL2main -lSDL2
 
 # Virtual paths
 
@@ -26,23 +31,27 @@ vpath %.hpp $(src)
 all : $(output)
 
 clean :
-	rm -f $(obs) $(output)
+	rm -f $(objects) $(objects2) $(output)
+	@echo "    [ SUCCESS ] Intermediate objects and executable removed"
 
 # Helper labels
 
-$(output) : $(obs)
+$(output) : $(objects) $(objects2)
 	rm -f $@
-	$(comp) $(flags) $(SDL2_link) $^ -o $@
+	$(comp) $^ $(flags) $(idirs) $(ldirs) $(libs) -o $@
+	@echo "    [ SUCCESS ] Executable $@ built"
 	
-
 # Pattern rule for general compilation
 
 $(bin)%.o : %.cpp
-	$(comp) $(flags) -I$(SDL2_h) $< -c -o $@
+	$(comp) $(flags) $< -c -o $@
 	@echo "    [ SUCCESS ] $< --> $@"
 
 # Dependency rules
 
 $(bin)Snake.o : Snake.hpp SnakeDirection.hpp GridPoint.hpp
 $(bin)Grid.o : Grid.hpp GridCell.hpp GridException.hpp
-$(bin)Main.o : Snake.hpp GridPoint.hpp
+$(bin)Main.o : WindowTester.hpp GridPoint.hpp GridCell.hpp
+
+# Other Dependencies
+$(bin)WindowTester.o : WindowTester.hpp

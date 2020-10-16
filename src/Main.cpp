@@ -1,8 +1,9 @@
 #include <iostream>
-#include "Snake.hpp"
-#include "Grid.hpp"
-#include "GridPoint.hpp"
 #include <SDL2/SDL.h>
+#include <vector>
+#include "WindowTester.hpp"
+#include "GridPoint.hpp"
+#include "GridCell.hpp"
 
 
 
@@ -44,10 +45,9 @@ std::ostream& operator<<(std::ostream& os, const GridCell cell)
 	return os;
 }
 
+// main() entry point must have the argc and argv parameters for SDL2 to work.
 int main(int argc, char* argv[])
 {
-	std::cout << "Hello world!" << std::endl;
-	std::cin.get();
-
-	return 0;
+	int result = WindowTester{}.run();
+	return result;
 }
