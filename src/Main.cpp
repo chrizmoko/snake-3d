@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <vector>
-#include "WindowTester.hpp"
 #include "GridPoint.hpp"
 #include "GridCell.hpp"
 
@@ -48,6 +47,5 @@ std::ostream& operator<<(std::ostream& os, const GridCell cell)
 // main() entry point must have the argc and argv parameters for SDL2 to work.
 int main(int argc, char* argv[])
 {
-	int result = WindowTester{}.run();
-	return result;
+	return 0;
 }

@@ -9,8 +9,7 @@ dep = dep/
 
 output = Main.exe
 
-objects = $(bin)Snake.o $(bin)Grid.o $(bin)Main.o
-objects2 = $(bin)WindowTester.o
+objects = $(bin)Snake.o $(bin)Grid.o $(bin)Window.o $(bin)Main.o
 
 # Include directory
 
@@ -31,12 +30,12 @@ vpath %.hpp $(src)
 all : $(output)
 
 clean :
-	rm -f $(objects) $(objects2) $(output)
+	rm -f $(objects) $(output)
 	@echo "    [ SUCCESS ] Intermediate objects and executable removed"
 
 # Helper labels
 
-$(output) : $(objects) $(objects2)
+$(output) : $(objects)
 	rm -f $@
 	$(comp) $^ $(flags) $(idirs) $(ldirs) $(libs) -o $@
 	@echo "    [ SUCCESS ] Executable $@ built"
@@ -51,7 +50,5 @@ $(bin)%.o : %.cpp
 
 $(bin)Snake.o : Snake.hpp SnakeDirection.hpp GridPoint.hpp
 $(bin)Grid.o : Grid.hpp GridCell.hpp GridException.hpp
-$(bin)Main.o : WindowTester.hpp GridPoint.hpp GridCell.hpp
-
-# Other Dependencies
-$(bin)WindowTester.o : WindowTester.hpp
+$(bin)Window.o : Window.hpp Renderer.hpp WindowException.hpp
+$(bin)Main.o : GridPoint.hpp GridCell.hpp
