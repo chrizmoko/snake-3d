@@ -3,10 +3,10 @@
 // Implementation of Snake.hpp.
 
 #include "Snake.hpp"
-#include "SnakeDirection.hpp"
-#include "GridPoint.hpp"
 #include <queue>
 #include <vector>
+#include "SnakeDirection.hpp"
+#include "GridPoint.hpp"
 
 
 

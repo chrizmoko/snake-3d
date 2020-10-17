@@ -6,10 +6,10 @@
 #ifndef SNAKE_HPP
 #define SNAKE_HPP
 
-#include "SnakeDirection.hpp"
-#include "GridPoint.hpp"
 #include <queue>
 #include <vector>
+#include "SnakeDirection.hpp"
+#include "GridPoint.hpp"
 
 
 
