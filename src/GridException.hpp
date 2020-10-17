@@ -15,20 +15,20 @@ class GridException : public std::exception
 public:
 	// Creates the exception with containing a message that is passed in.
 	GridException(const std::string& msg)
-		: std::exception{}, message{msg}
+		: std::exception{}, message_{msg}
 	{
 	}
 
 	// Creates a copy of the exception from an existing one.
 	GridException(const GridException& e)
-		: std::exception{e}, message{e.message}
+		: std::exception{e}, message_{e.message_}
 	{
 	}
 
 	// Copies the contents of another exception to this one.
 	GridException& operator=(const GridException& e)
 	{
-		message = e.message;
+		message_ = e.message_;
 		return *this;
 	}
 
@@ -36,11 +36,11 @@ public:
 	// the message that was passed in on creation of the exception.
 	const char* what() const noexcept override
 	{
-		return message.c_str();
+		return message_.c_str();
 	}
 
 protected:
-	std::string message;
+	std::string message_;
 };
 
 

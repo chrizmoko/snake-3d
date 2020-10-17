@@ -47,7 +47,7 @@ public:
 
 	// getCellAt() returns the contents of the cell at the provided (x, y, z)
 	// position. The cell contents are either Empty, Food, or Snake.
-	GridCell getCellAt(int x, int y, int z);
+	GridCell getCellAt(int x, int y, int z) const;
 
 private:
 	int x_length_;
@@ -56,7 +56,7 @@ private:
 	GridCell* grid_;
 
 private:
-	// FillGrid() fills all spaces in the grid with the provided GridCell.
+	// fillGrid() fills all spaces in the grid with the provided GridCell.
 	void fillGrid(GridCell cell) noexcept;
 };
 

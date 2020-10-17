@@ -16,19 +16,20 @@ Grid::Grid(int x_length, int y_length, int z_length)
 {
 	if (x_length_ < 0 || y_length_ < 0 || z_length_ < 0)
 	{
-		throw GridException("Grid dimensions must be positive values.");
+		throw GridException("Grid dimensions must be non-negative values.");
 	}
 
 	try
 	{
 		grid_ = new GridCell[x_length_ * y_length_ * z_length_];
-		fillGrid(GridCell::Empty);
 	}
 	catch (...)
 	{
 		delete[] grid_;
 		throw;
 	}
+
+	fillGrid(GridCell::Empty);
 }
 
 Grid::Grid(const Grid& grid)
@@ -45,6 +46,17 @@ Grid::Grid(const Grid& grid)
 	{
 		delete[] grid_;
 		throw;
+	}
+
+	for (int x = 0; x < x_length_; ++x)
+	{
+		for (int y = 0; y < y_length_; ++y)
+		{
+			for (int z = 0; z < z_length_; ++z)
+			{
+				setCellAt(x, y, z, grid.getCellAt(x, y, z));
+			}
+		}
 	}
 }
 
@@ -68,7 +80,6 @@ int Grid::lengthY() const noexcept
 	return y_length_;
 }
 
-
 int Grid::lengthZ() const noexcept
 {
 	return z_length_;
@@ -89,7 +100,7 @@ void Grid::setCellAt(int x, int y, int z, GridCell cell)
 	grid_[(x * y_length_ * z_length_) + (y * z_length_) + z] = cell;
 }
 
-GridCell Grid::getCellAt(int x, int y, int z)
+GridCell Grid::getCellAt(int x, int y, int z) const
 {
 	if (!isValidCell(x, y, z))
 	{
@@ -106,7 +117,7 @@ void Grid::fillGrid(GridCell cell) noexcept
 		{
 			for (int z = 0; z < z_length_; ++z)
 			{
-				grid_[(x * y_length_ * z_length_) + (y * z_length_) + z] = cell;
+				setCellAt(x, y, z, cell);
 			}
 		}
 	}
